@@ -1,1 +1,1 @@
-# galaxypy-autoplay
+# galaxypy autoplay
