@@ -21,7 +21,7 @@ Builder.load_file("menu.kv")
 
 class MainWidget(RelativeLayout):
 	from transforms import transform, tranform_perspective, transform_2D
-	from user_actions import keyboard_closed, on_keyboard_down, on_keyboard_up, on_touch_down, on_touch_up
+	from machine_actions import keyboard_closed, on_keyboard_down, on_keyboard_up, on_touch_down, on_touch_up
 	menu_widget = ObjectProperty()
 
 	perspective_point_x = NumericProperty(0)
@@ -94,12 +94,12 @@ class MainWidget(RelativeLayout):
 		self.sound_music1 = SoundLoader.load("audio/music1.wav")
 		self.sound_restart = SoundLoader.load("audio/restart.wav")
 
-		self.sound_music1.volume = 1
-		self.sound_galaxy.volume = 0.25
-		self.sound_gameover_impact.volume = 0.6
-		self.sound_begin.volume = 0.25
-		self.sound_restart.volume = 0.25
-		self.sound_gameover_voice.volume = 0.25
+		self.sound_music1.volume = 0
+		self.sound_galaxy.volume = 0
+		self.sound_gameover_impact.volume = 0
+		self.sound_begin.volume = 0
+		self.sound_restart.volume = 0
+		self.sound_gameover_voice.volume = 0
 
 
 	def reset_game(self):
@@ -350,14 +350,19 @@ class MainWidget(RelativeLayout):
 			self.current_offset_x += speed_x * time_factor
 
 		if not self.check_ship_collision() and not self.state_game_over:
-			self.state_game_over = True
-			self.menu_title = "G  A  M  E    O  V  E  R"
-			self.menu_button_title = "RESTART"
-			self.menu_widget.opacity = 1
-			self.sound_music1.stop()
-			self.sound_gameover_impact.play()
-			Clock.schedule_once(self.play_game_over_voice, 2)
+			#self.state_game_over = True
+			#self.menu_title = "G  A  M  E    O  V  E  R"
+			#self.menu_button_title = "RESTART"
+			#self.menu_widget.opacity = 1
+			#self.sound_music1.stop()
+			#self.sound_gameover_impact.play()
+			#Clock.schedule_once(self.play_game_over_voice, 2)
 			print("GAME OVER")
+			
+			self.sound_music1.play()
+			self.reset_game()
+			self.state_game_has_started = True
+
 
 
 	def play_game_over_voice(self, dt):
