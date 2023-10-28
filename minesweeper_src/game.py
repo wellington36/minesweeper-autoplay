@@ -129,5 +129,5 @@ class Game:
                     pygame.quit()
                     return
 
-Minesweeper = Game()
-Minesweeper.run()
+# Minesweeper = Game()
+# Minesweeper.run()
