@@ -1,4 +1,3 @@
-import gymnasium as gym
 from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv
@@ -14,13 +13,12 @@ def train_minesweeper():
     #env = Monitor(env)
     #env = DummyVecEnv([lambda: env])
 
-    env = gym.make('MineSweeper-v0', graphics=False)  # You can set graphics to False to run without visuals
+    env = MinesweeperEnv(graphics=False) # You can set graphics to False to run without visuals
     env.reset(seed=42)
-    
     # Create a PPO model
     model = PPO("MlpPolicy", env, verbose=1)  # You can use different policies and hyperparameters
 
-    for i in range(1):
+    for i in range(1000):
         # Train the model
         model.learn(total_timesteps=int(1e4), reset_num_timesteps=False)  # Adjust the number of training steps as needed
         # Save the trained model
