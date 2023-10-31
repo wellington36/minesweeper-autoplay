@@ -1,8 +1,8 @@
 import pygame
 import numpy as np
 
-MINES = 80
-GRID_SIZE = 20
+MINES = 20
+GRID_SIZE = 10
 
 SCREEN_SIZE = 480
 TILE_SIZE = SCREEN_SIZE//GRID_SIZE
