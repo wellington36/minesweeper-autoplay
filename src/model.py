@@ -15,7 +15,7 @@ def train_minesweeper():
     model = PPO("MlpPolicy", env, verbose=1)  # You can use different policies and hyperparameters
 
     # Train the model
-    model.learn(total_timesteps=int(1e5))  # Adjust the number of training steps as needed
+    model.learn(total_timesteps=int(1e4))  # Adjust the number of training steps as needed
 
     # Evaluate the model
     mean_reward, _ = evaluate_policy(model, env, n_eval_episodes=10)

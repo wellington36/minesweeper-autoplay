@@ -18,6 +18,7 @@ class MinesweeperEnv(gym.Env):
 
     def reset(self):
         self.minesweeper = Minesweeper(graphics=self.graphics)
+        self.reward = 0  # Initialize the reward to zero
         return self.get_state()
 
     def step(self, action):
@@ -25,19 +26,18 @@ class MinesweeperEnv(gym.Env):
         self.minesweeper.on_click((x, y))
         state = self.get_state()
         done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - MINES
-        reward = 0  # Initialize the reward to zero
 
         if done:
             if self.minesweeper.explosion:
-                reward -= 1  # Lose
+                self.reward -= 1  # Lose
             else:
-                reward += 1  # Win
+                self.reward += 1  # Win
         else:
             # You win +0.1 for each non-mine tile clicked
             if self.minesweeper.mines[x,y] == 0:
-                reward += 0.1
+                self.reward += 0.1
 
-        return state, reward, done, {}
+        return state, self.reward, done, {}
 
     def render(self):
         if self.graphics:
@@ -57,6 +57,7 @@ for i in range(100):
     while not done:
         action = env.action_space.sample()  # Replace with your own action selection logic
         obs, reward, done, _ = env.step(action)
+        print(action, reward, done)
         env.render()
         pygame.time.wait(100)
     obs = env.reset()
