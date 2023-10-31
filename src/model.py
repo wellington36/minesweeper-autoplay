@@ -22,7 +22,8 @@ def train_minesweeper():
     print(f"Mean reward: {mean_reward}")
 
     # Save the trained model
-    model.save("C:\\Users\\andre\\Desktop\\galaxypy-autoplay\\saved-models")
+    #model.save("C:\\Users\\andre\\Desktop\\galaxypy-autoplay\\saved-models")       # Andres
+    model.save("../saved-models/minesweeper_model")                                 # Wellington
 
 if __name__ == "__main__":
     train_minesweeper()
