@@ -43,8 +43,12 @@ env = MinesweeperEnv(graphics=True)  # You can set graphics to False to run with
 
 obs = env.reset()
 done = False
-while not done:
-    action = env.action_space.sample()  # Replace with your own action selection logic
-    obs, reward, done, _ = env.step(action)
-    env.render()
-    pygame.time.wait(1000)
+print("Action Space {}".format(env.action_space))
+print("State Space {}".format(env.observation_space))
+for i in range(100):
+    while not done:
+        action = env.action_space.sample()  # Replace with your own action selection logic
+        obs, reward, done, _ = env.step(action)
+        env.render()
+    obs = env.reset()
+    done = False
