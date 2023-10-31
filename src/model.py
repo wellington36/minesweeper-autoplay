@@ -22,7 +22,7 @@ def train_minesweeper():
     print(f"Mean reward: {mean_reward}")
 
     # Save the trained model
-    model.save("saved_models/minesweeper_model")
+    model.save("C:\\Users\\andre\\Desktop\\galaxypy-autoplay\\saved-models")
 
 if __name__ == "__main__":
     train_minesweeper()
