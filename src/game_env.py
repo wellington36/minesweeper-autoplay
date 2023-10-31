@@ -35,7 +35,7 @@ class MinesweeperEnv(gym.Env):
          if self.minesweeper.mines[x, y] == 0:
              self.reward += 0.1
 
-     return state, self.reward, done, False, {}  # Return a tuple of (observation, reward, done, info)
+     return state, self.reward, done, done, {}  # Return a tuple of (observation, reward, done, info)
 
     def render(self):
         if self.graphics:
@@ -51,13 +51,3 @@ register(
     id='MineSweeper-v0',
     entry_point='game_env:MinesweeperEnv', 
 )
-
-env = gym.make('MineSweeper-v0', graphics=True)  # You can set graphics to False to run without visuals
-
-obs, _ = env.reset(seed=42, options=None)
-done = False
-while not done:
-    action = env.action_space.sample()  # Replace with your own action selection logic
-    obs, reward, done, _, _ = env.step(action)
-    env.render()
-    pygame.time.wait(100)
