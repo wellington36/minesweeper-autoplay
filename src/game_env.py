@@ -1,5 +1,5 @@
-import gymnasium as gym
 import pygame
+import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
 from gymnasium.envs.registration import register
@@ -20,6 +20,7 @@ class MinesweeperEnv(gym.Env):
         return self.get_state(), {}
 
     def step(self, action):
+     self.render()
      x, y = action % GRID_SIZE, action // GRID_SIZE
      self.minesweeper.on_click((x, y))
      state = self.get_state()
@@ -46,8 +47,3 @@ class MinesweeperEnv(gym.Env):
         for pos in self.minesweeper.checked:
             state[pos[0] * GRID_SIZE + pos[1]] = self.minesweeper.check_mines(pos)
         return state
-
-register(
-    id='MineSweeper-v0',
-    entry_point='game_env:MinesweeperEnv', 
-)
