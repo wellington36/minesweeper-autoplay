@@ -2,7 +2,6 @@ import gym
 import pygame
 import numpy as np
 from gym import spaces
-from copy import deepcopy
 from game import Game as Minesweeper
 
 MINES = 80
