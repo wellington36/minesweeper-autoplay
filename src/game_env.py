@@ -1,6 +1,7 @@
 import gym
-from gym import spaces
+import pygame
 import numpy as np
+from gym import spaces
 from copy import deepcopy
 from game import Game as Minesweeper
 
@@ -46,3 +47,4 @@ while not done:
     action = env.action_space.sample()  # Replace with your own action selection logic
     obs, reward, done, _ = env.step(action)
     env.render()
+    pygame.time.wait(1000)
