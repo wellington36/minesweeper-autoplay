@@ -6,7 +6,7 @@ env = MinesweeperEnv(graphics=True) # You can set graphics to False to run witho
 env.reset(seed=42)
 
 models_dir = "../modelsv2/PPO"
-model_path = f"{models_dir}/minesweeper_model300000.zip"
+model_path = f"{models_dir}/minesweeper_model490000.zip"
 
 model = PPO.load(model_path, env=env)
 
