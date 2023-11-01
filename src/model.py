@@ -7,8 +7,8 @@ import os
 # Import your Minesweeper environment"
 from game_env import MinesweeperEnv
 
-models_dir = "../models/PPO"
-logdir = "../logs"
+models_dir = "../modelsv2/PPO"
+logdir = "../logsv2"
 
 if not os.path.exists(models_dir):
     os.makedirs(models_dir)

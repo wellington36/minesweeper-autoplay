@@ -20,23 +20,23 @@ class MinesweeperEnv(gym.Env):
         return self.get_state(), {}
 
     def step(self, action):
-     self.render()
-     x, y = action % GRID_SIZE, action // GRID_SIZE
-     self.minesweeper.on_click((x, y))
-     state = self.get_state()
-     done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - MINES
+        self.render()
+        x, y = action % GRID_SIZE, action // GRID_SIZE
+        self.minesweeper.on_click((x, y))
+        state = self.get_state()
+        done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - MINES
 
-     if done:
-         if self.minesweeper.explosion:
-             self.reward -= 1  # Lose
-         else:
-             self.reward += 1  # Win
-     else:
-         # You win +0.1 for each non-mine tile clicked
-         if self.minesweeper.mines[x, y] == 0:
-             self.reward += 0.1
+        if done:
+            if self.minesweeper.explosion:
+                self.reward -= 1  # Lose
+            else:
+                self.reward += 1  # Win
+        else:
+            # You win +0.1 for each non-mine tile clicked
+            if self.minesweeper.mines[x, y] == 0:
+                self.reward += 0.3
 
-     return state, self.reward, done, done, {}  # Return a tuple of (observation, reward, done, info)
+        return state, self.reward, done, done, {}  # Return a tuple of (observation, reward, done, info)
 
     def render(self):
         if self.graphics:
