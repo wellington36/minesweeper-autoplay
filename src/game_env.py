@@ -31,8 +31,6 @@ class MinesweeperEnv(gym.Env):
         state = self.get_state()
         done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - MINES
 
-        print((9, 9) in self.minesweeper.checked)
-
         if done:
             if self.minesweeper.explosion or self.is_timed_out():
                 self.reward -= 1  # Lose
