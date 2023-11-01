@@ -2,10 +2,8 @@ import gym
 import pygame
 import numpy as np
 from gym import spaces
-from game import Game as Minesweeper
+from game import Game as Minesweeper, GRID_SIZE, MINES
 
-MINES = 80
-GRID_SIZE = 20
 
 class MinesweeperEnv(gym.Env):
     def __init__(self, graphics=True):

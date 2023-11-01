@@ -7,8 +7,8 @@ import os
 # Import your Minesweeper environment"
 from game_env import MinesweeperEnv
 
-models_dir = "../modelsv2/PPO"
-logdir = "../logsv2"
+models_dir = "../modelsv4/PPO"
+logdir = "../logsv4"
 
 if not os.path.exists(models_dir):
     os.makedirs(models_dir)
@@ -23,18 +23,18 @@ def train_minesweeper():
     #env = Monitor(env)
     #env = DummyVecEnv([lambda: env])
 
-    env = MinesweeperEnv(graphics=False) # You can set graphics to False to run without visuals
+    env = MinesweeperEnv(graphics=False)
     env.reset(seed=42)
 
     # Create a PPO model
-    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=logdir)  # You can use different policies and hyperparameters
+    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=logdir)
 
     TIMESTEPS = 10000
-    for i in range(1,50):
+    for i in range(1,100):
         # Train the model
-        model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name="models")  # Adjust the number of training steps as needed
+        model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name="models")
         # Save the trained model
-        model.save(f"{models_dir}/minesweeper_model{i * TIMESTEPS}")                                 # Wellington
+        model.save(f"{models_dir}/minesweeper_model{i * TIMESTEPS}")
 
     # Evaluate the model
     #mean_reward, _ = evaluate_policy(model, env, n_eval_episodes=1)

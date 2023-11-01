@@ -1,7 +1,7 @@
 import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
-from game import Game as Minesweeper, GRID_SIZE
+from game import Game as Minesweeper, GRID_SIZE, MINES
 import time
 
 class MinesweeperEnv(gym.Env):
@@ -13,11 +13,15 @@ class MinesweeperEnv(gym.Env):
         self.last_move_time = time.time()  # Initialize the last move time
         self.action_space = spaces.Discrete(GRID_SIZE**2)
         self.observation_space = spaces.Box(low=0, high=8, shape=(GRID_SIZE * GRID_SIZE,), dtype=np.uint8)  # Flatten the observation space
+        self.last_num_of_mines = -1
+        self.last_num_of_remains_options = GRID_SIZE ** 2 - np.sum(self.minesweeper.mines)
 
     def reset(self, seed=None, options=None):
         self.minesweeper = Minesweeper(graphics=self.graphics)
         self.reward = 0  # Initialize the reward to zero
         self.last_move_time = time.time()  # Reset the last move time
+        self.last_num_of_mines = -1
+        self.last_num_of_remains_options = GRID_SIZE ** 2 - np.sum(self.minesweeper.mines)
         return self.get_state(), {}
 
     def step(self, action):
@@ -25,17 +29,23 @@ class MinesweeperEnv(gym.Env):
         x, y = action % GRID_SIZE, action // GRID_SIZE
         self.minesweeper.on_click((x, y))
         state = self.get_state()
-        done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - np.sum(self.minesweeper.mines)
-
+        done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - MINES
+        #print(self.last_num_of_remains_options, GRID_SIZE ** 2 - len(self.minesweeper.checked) - np.sum(self.minesweeper.mines))
         if done:
             if self.minesweeper.explosion or self.is_timed_out():
-                self.reward -= 1  # Lose
+                self.reward -= 10  # Lose
             else:
-                self.reward += 1  # Win
+                self.reward += 10  # Win
+        elif self.last_num_of_remains_options == GRID_SIZE ** 2 - len(self.minesweeper.checked) - np.sum(self.minesweeper.mines):
+            self.reward -= 10
         else:
-            # You win +0.1 for each non-mine tile clicked
             if self.minesweeper.mines[x, y] == 0:
-                self.reward += 0.3
+                if (self.minesweeper.check_mines((x, y)) > self.last_num_of_mines):
+                    self.reward += 1
+                else:
+                    self.reward += 0.5
+        self.last_num_of_mines = self.minesweeper.check_mines((x, y))
+        self.last_num_of_remains_options = GRID_SIZE ** 2 - len(self.minesweeper.checked) - MINES
 
         # Update the last move time
         self.last_move_time = time.time()

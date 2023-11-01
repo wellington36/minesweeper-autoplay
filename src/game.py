@@ -1,7 +1,7 @@
 import pygame
 import numpy as np
 
-MINES = 20
+MINES = 13
 GRID_SIZE = 10
 
 SCREEN_SIZE = 480
@@ -86,7 +86,12 @@ class Game:
         
 
     def set_mines(self):
-        return np.random.binomial(1, MINES/(GRID_SIZE*GRID_SIZE), (GRID_SIZE,GRID_SIZE))
+        mines_distributions = np.random.binomial(1, MINES/(GRID_SIZE*GRID_SIZE), (GRID_SIZE,GRID_SIZE))
+
+        while sum(sum(mines_distributions)) != MINES:
+            mines_distributions = np.random.binomial(1, MINES/(GRID_SIZE*GRID_SIZE), (GRID_SIZE,GRID_SIZE))
+            
+        return mines_distributions
     
     def get_neighbours(self, pos):
         neighbours = []
