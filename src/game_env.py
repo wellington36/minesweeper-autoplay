@@ -30,21 +30,26 @@ class MinesweeperEnv(gym.Env):
         self.minesweeper.on_click((x, y))
         state = self.get_state()
         done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - MINES
-        #print(self.last_num_of_remains_options, GRID_SIZE ** 2 - len(self.minesweeper.checked) - np.sum(self.minesweeper.mines))
+
+        print((9, 9) in self.minesweeper.checked)
+
         if done:
             if self.minesweeper.explosion or self.is_timed_out():
-                self.reward -= 10  # Lose
+                self.reward -= 1  # Lose
             else:
-                self.reward += 10  # Win
+                self.reward += 1  # Win
         elif self.last_num_of_remains_options == GRID_SIZE ** 2 - len(self.minesweeper.checked) - MINES:
-            self.reward -= 10
+            self.reward -= 1
             done = True
         else:
             if self.minesweeper.mines[x, y] == 0:
-                if (self.minesweeper.check_mines((x, y)) > self.last_num_of_mines):
-                    self.reward += 1
+                if ((x+1, y) in self.minesweeper.checked or
+                    (x, y+1) in self.minesweeper.checked or
+                    (x-1, y) in self.minesweeper.checked or
+                    (x, y-1) in self.minesweeper.checked ) and not (x in [0, 9] or y in [0, 9]):
+                    self.reward += 0.3
                 else:
-                    self.reward += 0.5
+                    self.reward -= 0.3
         self.last_num_of_mines = self.minesweeper.check_mines((x, y))
         self.last_num_of_remains_options = GRID_SIZE ** 2 - len(self.minesweeper.checked) - MINES
 
