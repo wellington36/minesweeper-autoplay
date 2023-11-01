@@ -36,8 +36,9 @@ class MinesweeperEnv(gym.Env):
                 self.reward -= 10  # Lose
             else:
                 self.reward += 10  # Win
-        elif self.last_num_of_remains_options == GRID_SIZE ** 2 - len(self.minesweeper.checked) - np.sum(self.minesweeper.mines):
+        elif self.last_num_of_remains_options == GRID_SIZE ** 2 - len(self.minesweeper.checked) - MINES:
             self.reward -= 10
+            done = True
         else:
             if self.minesweeper.mines[x, y] == 0:
                 if (self.minesweeper.check_mines((x, y)) > self.last_num_of_mines):
