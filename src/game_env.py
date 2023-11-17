@@ -41,12 +41,25 @@ class MinesweeperEnv(gym.Env):
             done = True
         else:
             if self.minesweeper.mines[x, y] == 0:
-                for tile in self.minesweeper.get_neighbours((x, y)):
-                    if tile in self.minesweeper.checked:
-                        self.reward += 0.3
-                        break
+                bkp_checked = None
+                clicked_neighbour = False
+                if (x,y) == self.minesweeper.checked[0]:
+                    bkp_checked = self.minesweeper.checked
+                else:
+                    for tile in self.minesweeper.get_neighbours((x, y)):
+                        if tile in bkp_checked:
+                            clicked_neighbour = True
+                            break
+                if clicked_neighbour:
+                    self.reward += 0.3
                 else:
                     self.reward -= 0.3
+                # for tile in self.minesweeper.get_neighbours((x, y)):
+                #     if tile in self.minesweeper.checked:
+                #         self.reward += 0.3
+                #         break
+                # else:
+                #     self.reward -= 0.3
         self.last_num_of_mines = self.minesweeper.check_mines((x, y))
         self.last_num_of_remains_options = GRID_SIZE ** 2 - len(self.minesweeper.checked) - MINES
 
