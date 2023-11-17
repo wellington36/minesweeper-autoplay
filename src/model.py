@@ -7,8 +7,8 @@ import os
 # Import your Minesweeper environment"
 from game_env import MinesweeperEnv
 
-models_dir = "../modelsv6/PPO"
-logdir = "../logsv6"
+models_dir = "../modelsv7/PPO"
+logdir = "../logsv7"
 
 if not os.path.exists(models_dir):
     os.makedirs(models_dir)
@@ -29,7 +29,7 @@ def train_minesweeper():
     # Create a PPO model
     model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=logdir)
 
-    TIMESTEPS = 500000
+    TIMESTEPS = 100000
     for i in range(1,100):
         # Train the model
         model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name="models")

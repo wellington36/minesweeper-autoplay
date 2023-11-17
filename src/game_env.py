@@ -15,6 +15,7 @@ class MinesweeperEnv(gym.Env):
         self.observation_space = spaces.Box(low=0, high=8, shape=(GRID_SIZE * GRID_SIZE,), dtype=np.uint8)  # Flatten the observation space
         self.last_num_of_mines = -1
         self.last_num_of_remains_options = GRID_SIZE ** 2 - np.sum(self.minesweeper.mines)
+        self.bkp_checked = []
 
     def reset(self, seed=None, options=None):
         self.minesweeper = Minesweeper(graphics=self.graphics)
@@ -32,6 +33,7 @@ class MinesweeperEnv(gym.Env):
         done = self.minesweeper.explosion or len(self.minesweeper.checked) == GRID_SIZE ** 2 - MINES
 
         if done:
+            self.bkp_checked = []
             if self.minesweeper.explosion or self.is_timed_out():
                 self.reward -= 1  # Lose
             else:
@@ -41,15 +43,18 @@ class MinesweeperEnv(gym.Env):
             done = True
         else:
             if self.minesweeper.mines[x, y] == 0:
-                bkp_checked = None
                 clicked_neighbour = False
-                if (x,y) == self.minesweeper.checked[0]:
-                    bkp_checked = self.minesweeper.checked
+                print((x, y), self.bkp_checked)
+                if (x, y) == self.minesweeper.checked[0]:
+                    self.bkp_checked = self.minesweeper.checked
                 else:
                     for tile in self.minesweeper.get_neighbours((x, y)):
-                        if tile in bkp_checked:
+                        if tile in self.bkp_checked:
                             clicked_neighbour = True
                             break
+                
+                self.bkp_checked = self.minesweeper.checked
+
                 if clicked_neighbour:
                     self.reward += 0.3
                 else:
