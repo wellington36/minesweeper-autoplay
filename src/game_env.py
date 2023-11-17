@@ -41,11 +41,10 @@ class MinesweeperEnv(gym.Env):
             done = True
         else:
             if self.minesweeper.mines[x, y] == 0:
-                if ((x+1, y) in self.minesweeper.checked or
-                    (x, y+1) in self.minesweeper.checked or
-                    (x-1, y) in self.minesweeper.checked or
-                    (x, y-1) in self.minesweeper.checked ) and not (x in [0, 9] or y in [0, 9]):
-                    self.reward += 0.3
+                for tile in self.minesweeper.get_neighbours((x, y)):
+                    if tile in self.minesweeper.checked:
+                        self.reward += 0.3
+                        break
                 else:
                     self.reward -= 0.3
         self.last_num_of_mines = self.minesweeper.check_mines((x, y))
