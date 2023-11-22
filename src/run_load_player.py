@@ -1,12 +1,14 @@
 import pygame
 from stable_baselines3 import PPO
+from game import GRID_SIZE
 from game_env import MinesweeperEnv
 
 env = MinesweeperEnv(graphics=True) # You can set graphics to False to run without visuals
 env.reset()
 
-models_dir = "../modelsv7/PPO"
-model_path = f"{models_dir}/minesweeper_model2900000"
+n_steps = 2_000_000
+models_dir = "../modelsv6/PPO"
+model_path = f"{models_dir}/minesweeper_model{n_steps}"
 
 model = PPO.load(model_path, env=env)
 
@@ -21,7 +23,9 @@ for ep in range(episodes):
         action, _ = model.predict(obs)
         obs, reward, done, _, info = env.step(action)
 
-        print(f"Action: {action} reward: {reward} done: {done}")
-        pygame.time.wait(1000)
+        x, y = action % GRID_SIZE, action // GRID_SIZE
+
+        print(f"Action: {(x, y)} reward: {reward} done: {done}")
+        pygame.time.wait(1500)
 
 env.close()

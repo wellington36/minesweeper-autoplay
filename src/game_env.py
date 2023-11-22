@@ -44,8 +44,7 @@ class MinesweeperEnv(gym.Env):
         else:
             if self.minesweeper.mines[x, y] == 0:
                 clicked_neighbour = False
-                print((x, y), self.bkp_checked)
-                if (x, y) == self.minesweeper.checked[0]:
+                if (x, y) == self.minesweeper.checked[0]:   # first step
                     self.bkp_checked = self.minesweeper.checked
                 else:
                     for tile in self.minesweeper.get_neighbours((x, y)):

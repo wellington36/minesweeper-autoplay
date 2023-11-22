@@ -29,7 +29,7 @@ def train_minesweeper():
     # Create a PPO model
     model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=logdir)
 
-    TIMESTEPS = 100000
+    TIMESTEPS = 1_000_000
     for i in range(1,100):
         # Train the model
         model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name="models")
