@@ -6,7 +6,7 @@ from game_env import MinesweeperEnv
 env = MinesweeperEnv(graphics=True) # You can set graphics to False to run without visuals
 env.reset()
 
-n_steps = 57_000_000
+n_steps = 77_000_000
 models_dir = "../modelsv7/PPO"
 model_path = f"{models_dir}/minesweeper_model{n_steps}"
 
@@ -20,12 +20,13 @@ for ep in range(episodes):
     while not done:
         env.render()
 
+        print(obs)
         action, _ = model.predict(obs)
         obs, reward, done, _, info = env.step(action)
 
         x, y = action % GRID_SIZE, action // GRID_SIZE
 
         print(f"Action: {(x, y)} reward: {reward} done: {done}")
-        pygame.time.wait(1000)
+        pygame.time.wait(2000)
 
 env.close()
