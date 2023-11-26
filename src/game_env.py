@@ -80,6 +80,9 @@ class MinesweeperEnv(gym.Env):
         state = np.zeros(GRID_SIZE * GRID_SIZE, dtype=np.uint8)
         for pos in self.minesweeper.checked:
             state[pos[0] * GRID_SIZE + pos[1]] = self.minesweeper.check_mines(pos)
+
+            if state[pos[0] * GRID_SIZE + pos[1]] == 0:
+                state[pos[0] * GRID_SIZE + pos[1]] = 10
         return state
 
     def is_timed_out(self):
