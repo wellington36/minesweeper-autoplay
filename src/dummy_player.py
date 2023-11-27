@@ -12,7 +12,7 @@ class MinesweeperEnv(gym.Env):
         self.minesweeper = Minesweeper(graphics=graphics)
 
         self.action_space = spaces.Discrete(GRID_SIZE**2)
-        self.observation_space = spaces.Box(low=0, high=8, shape=(GRID_SIZE, GRID_SIZE), dtype=np.uint8)
+        self.observation_space = spaces.Box(low=0, high=10, shape=(GRID_SIZE, GRID_SIZE), dtype=np.uint8)
 
     def reset(self):
         self.minesweeper = Minesweeper(graphics=self.graphics)
@@ -41,7 +41,11 @@ env = MinesweeperEnv(graphics=True)  # You can set graphics to False to run with
 obs = env.reset()
 done = False
 while not done:
-    action = env.action_space.sample()  # Replace with your own action selection logic
+    action = env.action_space.sample()
+
+    x, y = action % GRID_SIZE, action // GRID_SIZE
+    print(f"Action: {(x, y)}")
+
     obs, reward, done, _ = env.step(action)
     env.render()
     pygame.time.wait(1000)
