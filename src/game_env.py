@@ -58,12 +58,7 @@ class MinesweeperEnv(gym.Env):
                     self.reward += 0.3
                 else:
                     self.reward -= 0.3
-                # for tile in self.minesweeper.get_neighbours((x, y)):
-                #     if tile in self.minesweeper.checked:
-                #         self.reward += 0.3
-                #         break
-                # else:
-                #     self.reward -= 0.3
+
         self.last_num_of_mines = self.minesweeper.check_mines((x, y))
         self.last_num_of_remains_options = GRID_SIZE ** 2 - len(self.minesweeper.checked) - MINES
 

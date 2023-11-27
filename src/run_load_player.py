@@ -7,7 +7,7 @@ env = MinesweeperEnv(graphics=True) # You can set graphics to False to run witho
 env.reset()
 
 n_steps = 39_800_000
-models_dir = "../modelsv9/PPO"
+models_dir = "../models/modelsv9/PPO"
 model_path = f"{models_dir}/minesweeper_model{n_steps}"
 
 model = PPO.load(model_path, env=env)
