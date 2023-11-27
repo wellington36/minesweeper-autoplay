@@ -6,8 +6,8 @@ from game_env import MinesweeperEnv
 env = MinesweeperEnv(graphics=True) # You can set graphics to False to run without visuals
 env.reset()
 
-n_steps = 39_800_000
-models_dir = "../models/modelsv9/PPO"
+n_steps = 42_500_000
+models_dir = "../models/modelsv6/PPO"
 model_path = f"{models_dir}/minesweeper_model{n_steps}"
 
 model = PPO.load(model_path, env=env)
