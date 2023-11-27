@@ -1,4 +1,5 @@
 # minesweeper autoplay
+Final project of the Reinforcement Learning discipline. Here is an implementation of the minesweeper game and codes for training and evaluating reinforcement learning models for the minesweeper game.
 
 ## Requirements
 To train and run a model you need to have the following Python libraries installed
