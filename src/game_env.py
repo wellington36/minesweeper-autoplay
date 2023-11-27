@@ -12,7 +12,7 @@ class MinesweeperEnv(gym.Env):
         self.move_timeout = move_timeout  # Move timeout in seconds
         self.last_move_time = time.time()  # Initialize the last move time
         self.action_space = spaces.Discrete(GRID_SIZE**2)
-        self.observation_space = spaces.Box(low=0, high=10, shape=(GRID_SIZE * GRID_SIZE,), dtype=np.uint8)  # Flatten the observation space
+        self.observation_space = spaces.Box(low=0, high=8, shape=(GRID_SIZE * GRID_SIZE,), dtype=np.uint8)  # Flatten the observation space
         self.last_num_of_mines = -1
         self.last_num_of_remains_options = GRID_SIZE ** 2 - np.sum(self.minesweeper.mines)
         self.bkp_checked = []
