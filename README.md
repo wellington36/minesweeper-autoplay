@@ -1,5 +1,16 @@
 # minesweeper autoplay
 
+## Requirements
+To train and run a model you need to have the following Python libraries installed
+```bash
+pip install pygame gymnasium time stable_baselines3
+```
+
+To visualize the training process, you need to have the following library
+```bash
+pip install tensorboard
+```
+
 ## Train a model
 To train a model, you need to run the following command (changing the path to save the model and logs)
 
