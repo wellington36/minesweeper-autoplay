@@ -2,7 +2,7 @@
 
 ## Requirements
 To train and run a model you need to have the following Python libraries installed
-```bash
+```python
 pip install pygame gymnasium time stable_baselines3
 ```
 
